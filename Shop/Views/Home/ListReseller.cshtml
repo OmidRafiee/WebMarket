@@ -1,0 +1,41 @@
+﻿@model Shop.ViewModel.Home.PageListViewModel
+
+@{
+    ViewBag.Title = "ListReseller";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Url{
+    <a href="/Home/Index">صفحه اصلی</a><li><span class="icon-chevron-right"></span></li><a href="/Home/ListReseller">لیست نمایندگی ها </a>
+}
+
+<h2 class="title-area">لیست نمایندگی </h2>
+@using (Ajax.BeginForm("Search", "Home", new AjaxOptions
+                                          {
+                                              HttpMethod = "Post",
+                                              InsertionMode = InsertionMode.Replace,
+                                              LoadingElementId = "imgLoading",
+                                              LoadingElementDuration = 1000,
+                                              Url = "/Home/Search",
+                                              UpdateTargetId = "divSearch"
+                                          }))
+{
+
+
+    <div class="sidebar-item widget_search">
+        <div class="form">
+            @Html.Editor("txtSearch",
+                          new { htmlAttributes = new { placeholder = "جستجو", style = "float: right;" } })
+            <button type="submit">
+                <i class="icon-search"></i>
+            </button>
+            <img src="~/Content/WebMarket/webmarket/images/ajax-loader.gif" id="imgLoading" style="display:none" />
+            @*<div class="control-group">
+                <button class="btn btn-primary push-down-10 " style="position:absolute;"/>
+                </div>*@
+        </div>
+    </div>
+}
+@Html.Partial("_SearchReseller", Model)
+

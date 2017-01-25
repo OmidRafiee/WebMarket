@@ -1,0 +1,165 @@
+﻿@model IEnumerable<Shop.Models.EntityModels.Product>
+
+
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Url{
+    <a href="/Home/Index">صفحه اصلی</a><li><span class="icon-chevron-right"></span></li><a href="/Admin/Products">مدیریت محصولات</a>
+}
+
+        @using (Html.BeginForm("AddGroup", "Admin", FormMethod.Post, new { id = "ProductsForm" }))
+        {
+            <h2 class="title-area">لیست محصولات</h2>
+             <div class="block-standart">
+                  <div class="group">
+                            @Html.ActionLink("افزودن محصول جدید", "AddProduct", "Admin", null, new { @class = "btn btn-primary push-down-10" })
+                        </div>
+                 <div class="control-group">
+                     <table class="table table-hover table-striped">
+                         <tr>
+                             <th>
+                                 @Html.DisplayNameFor(model => model.Image)
+                             </th>
+                             <th>
+                                 @Html.DisplayNameFor(model => model.Name)
+                             </th>
+                             <th>
+                                 @Html.DisplayNameFor(model => model.GroupId)
+                             </th>
+
+                             <th>
+                                 @Html.DisplayNameFor(model => model.Price)
+                             </th>
+
+                             <th>
+                                 @Html.DisplayName("عملیات")
+                             </th>
+
+
+                         </tr>
+
+                         @foreach (var item in Model)
+                         {
+                             <tr>
+                                 <td>
+                                     @* <img src="@Url.Content( "~/Files/UploadImages/" + item.Image )" width="80"/>*@
+                                     @Html.ImageFor(modelItem => item.Image, new { width = "55" }, "notfound.jpg", "Files", "UploadImages")
+                                 </td>
+
+                                 <td>
+                                     @Html.DisplayFor(modelItem => item.Name)
+                                 </td>
+                                 <td>
+                                     @Html.DisplayFor(modelItem => item.Group.Name)
+                                 </td>
+
+                                 <td>
+                                     @Html.DisplayFor(modelItem => item.Price)
+                                 </td>
+
+
+                                 <td>
+                                     @Html.ActionLink("ویرایش", "EditProduct", new { id = item.Id }) |
+                                     @Html.ActionLink("حذف", "DeleteProduct", new { id = item.Id }, new { onclick = "return confirm('جهت حذف مطمئن هستید ؟')" })
+                                 </td>
+                             </tr>
+
+                         }
+                     </table>
+
+                 </div>
+
+                    </div>
+                
+        }
+
+
+
+        @section script{
+            <script src="@Url.Content("~/Scripts/AjaxForm/jquery.form.min.js")"></script>
+            <script type="text/javascript">
+                $("#ProductsForm").ajaxForm();
+                $(function () {
+                    //$("#Group_ParentId").click(function () {
+                    //    if ($("#Group_ParentId").find(":selected").length > 0) {
+                    //        var txt = $("#Group_ParentId").find(":selected").text().trim();
+                    //        $("#Group_Name").val(txt.substring(1))
+                    //    }
+                    //});
+                    //$("#btnAdd").click(function (e) {
+                    //    e.preventDefault();
+                    //    if ($("#groupForm").valid()) {
+                    //        $.ajax({
+                    //            url: "/Admin/AddGroup",
+                    //            data: $("#groupForm").serialize(),
+                    //            type: "Post",
+                    //            dataType: "Json",
+                    //            success: function (result) {
+                    //                if (result.Success) {
+                    //                    $("#divGroupList").html(result.Html);
+                    //                }
+                    //                eval(result.Script);
+                    //            },
+                    //            error: function () {
+                    //                alert("خطا!");
+                    //            }
+                    //        });
+                    //    }
+                    //});
+                    //$("#btnDelete").click(function (e) {
+                    //    e.preventDefault();
+                    //    if ($("#Group_ParentId").find(":selected").length > 0) {
+                    //        $.ajax({
+                    //            url: "/Admin/DeleteGroup",
+                    //            data: { id: $("#Group_ParentId").find(":selected").val() },
+                    //            type: "Post",
+                    //            dataType: "Json",
+                    //            success: function (result) {
+                    //                if (result.Success) {
+                    //                    $("#divGroupList").html(result.Html);
+                    //                }
+                    //                eval(result.Script);
+                    //            },
+                    //            error: function () {
+                    //                alert("خطا!");
+                    //            }
+                    //        });
+                    //    }
+                    //    else {
+                    //        alert("ابتدا گروه را انتخاب کنید");
+                    //    }
+                    //});
+                    //$("#btnEdit").click(function (e) {
+                    //    e.preventDefault();
+                    //    if ($("#groupForm").valid()) {
+                    //        if ($("#Group_ParentId").find(":selected").length > 0) {
+                    //            $.ajax({
+                    //                url: "/Admin/EditGroup",
+                    //                data: {
+                    //                    Id: $("#Group_ParentId").find(":selected").val(),
+                    //                    Name: $("#Group_Name").val(),
+                    //                    ParentId: $("#Group_ParentId").find(":selected").attr("parentid")
+                    //                },
+                    //                type: "Post",
+                    //                dataType: "Json",
+                    //                success: function (result) {
+                    //                    if (result.Success) {
+                    //                        $("#divGroupList").html(result.Html);
+                    //                    }
+                    //                    eval(result.Script);
+                    //                },
+                    //                error: function () {
+                    //                    alert("خطا!");
+                    //                }
+                    //            });
+                    //        }
+                    //        else {
+                    //            alert("ابتدا گروه را انتخاب کنید");
+                    //        }
+                    //    }
+                    //});
+                });
+            </script>
+        }

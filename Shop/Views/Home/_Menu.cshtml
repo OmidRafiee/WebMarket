@@ -1,0 +1,57 @@
+﻿@*@model Shop.ViewModel.Home.ShowGroupViewModel
+
+
+    <li class="dropdown">
+
+        <a href="~/Home/index" class="dropdown-toggle"> خانه <b class="caret"></b> </a>
+        <ul class="dropdown-menu">
+
+            @if (Model.Groups.Any())
+            {
+                    foreach (var group in Model.Groups)
+                    {
+                        if (group.ParentId == null)
+                        {
+                            <li><a href="~/Groups/@group.Name">@group.Name</a></li>
+                        }
+                        else
+                        {
+                            <li class="dropdown">
+                                <a href="features.html" class="dropdown-toggle"><i class="icon-caret-left pull-right visible-desktop"></i> پیراهن</a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="~/Groups/@group.Name">@group.Name</a></li>
+                                </ul>
+                            </li>
+                        }
+                    }
+            }
+    </ul>
+    </li>*@
+
+
+@model IEnumerable<Shop.Models.EntityModels.Group>
+
+@helper AddOption(int? parentId)
+{
+    foreach (var item in Model.Where(p => p.ParentId == parentId).ToList())
+    {
+        <li><a href="~/Groups/@item.Name">@item.Name</a></li>
+        @Html.Raw(HttpUtility.HtmlDecode(AddOption(item.Id).ToString()));
+    }
+}
+
+
+
+
+<li class="dropdown">
+    <a href="~/Home/index" class="dropdown-toggle"> خانه <b class="caret"></b> </a>
+    <ul class="dropdown-menu">
+
+        @if (Model.Any())
+        {
+            @AddOption(null)
+
+        }
+
+    </ul>
+</li>

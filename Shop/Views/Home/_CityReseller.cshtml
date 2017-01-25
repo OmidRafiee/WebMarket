@@ -1,0 +1,7 @@
+﻿@model Shop.ViewModel.Home.CityResellerViewModel
+
+    @Html.LabelFor(model => model.Reseller.CityId, new { @class = "label" })
+    <div class="controls">
+        @Html.DropDownListFor(model => model.Reseller.CityId, new SelectList(Model.Cities, "Id", "Name"), "شهر نمایتدگی خود را انتخاب کنید")
+        @Html.ValidationMessageFor(model => model.Reseller.CityId)
+    </div>

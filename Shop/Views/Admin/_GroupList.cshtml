@@ -1,0 +1,40 @@
+﻿@model IEnumerable < Shop.Models.EntityModels.Group >
+
+@*@helper AddOption(int? parentId, string space)
+{
+    foreach (var item in Model.Where(p => p.ParentId == parentId).ToList())
+    {
+        <option @if ( ViewData["selectedid"] != null && ViewData["selectedid"].ToString() == item.Id.ToString() )
+     { <text>selected="selected"</text> }
+     value="@item.Id" parentid="@item.ParentId">@space + @item.Name</option>
+        @Html.Raw(HttpUtility.HtmlDecode(AddOption(item.Id, space + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").ToString()));
+    }
+}*@
+
+@* function helper *@
+@helper AddOption(int? parentId, string space)
+{
+    foreach (var item in Model.Where(p => p.ParentId == parentId).ToList())
+    {
+        <option @if (ViewData["selectedid"] != null && ViewData["selectedid"].ToString() == item.Id.ToString())
+                {
+                    <text> selected="selected" </text>
+                } 
+                value="@item.Id" parentid="@item.ParentId">@space + @item.Name</option>
+        @Html.Raw(HttpUtility.HtmlDecode(AddOption(item.Id, space + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;").ToString()));
+    }
+}
+
+
+
+
+
+
+<div id="divGroupList">
+    <select id="@ViewData["id"]" name="@ViewData["name"]" size="15" style="width:250px">
+        <option value="" style="color:red">گروه اصلی</option>
+        @AddOption(null, "")
+    </select>
+</div>
+
+@*@if (ViewData["selectedId"].ToString() == item.Id.ToString()) { <text> selected="selected" </text>*@ 

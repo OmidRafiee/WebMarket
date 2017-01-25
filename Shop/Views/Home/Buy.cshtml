@@ -1,0 +1,108 @@
+﻿@model Shop.Models.EntityModels.Factor
+
+@{
+    ViewBag.Title = "Buy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Url{
+
+    <a href="/Home/Index">صفحه اصلی</a><li><span class="icon-chevron-right"></span></li><a href="/Home/Buy">خرید محصولات  </a>
+}
+
+
+@using (Html.BeginForm("Buy", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <h2 class="title-area">خرید محصول </h2>
+
+    if (@ViewBag.Message1 !=null)
+    {
+        <div class="alert alert-danger in fade" style="display: inline-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            @ViewBag.Message1
+        </div>
+    }
+    if (@ViewBag.Message2 !=null)
+    {
+        <div class="alert alert-danger in fade" style="display: inline-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            @ViewBag.Message2
+        </div>
+    }
+    if (@ViewBag.Message3  != null)
+    {
+        <div class="alert alert-warning in fade" style="display: inline-block">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            @ViewBag.Message3
+        </div>
+    }
+    <p>
+        کاربر گرامی اطلاعات خود را به دقت وارد نمایید.
+    </p>
+    <br />
+
+
+    <div class="control-group">
+        @Html.LabelFor(model => model.Name,new { @class = "label" })
+        <div class="control-group">
+            @Html.EditorFor(model => model.Name,
+                                new { htmlAttributes = new { @required = "" } })
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+    </div>
+
+
+
+    <div class="control-group">
+        @Html.LabelFor(model => model.Mobile,
+                                          new { @class = "label" })
+        <div class="control-group">
+            @Html.EditorFor(model => model.Mobile)
+            @Html.ValidationMessageFor(model => model.Mobile)
+        </div>
+
+    </div>
+
+    <div class="control-group">
+        @Html.LabelFor(model => model.CodePosti,
+                                          new { @class = "label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.CodePosti)
+            @Html.ValidationMessageFor(model => model.CodePosti)
+        </div>
+    </div>
+
+
+
+    <div class="group">
+        @Html.LabelFor(model => model.Email,
+                                          new { @class = "label" })
+        <div class="control-group">
+            @Html.EditorFor(model => model.Email,
+                                new { htmlAttributes = new { @required = "" } })
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+
+    </div>
+
+    <div class="control-group">
+        @Html.LabelFor(model => model.Address,
+                                          new { @class = "label" })
+        <div class="control-group">
+            @Html.TextAreaFor(model => model.Address,
+                                  new { @required = "", style = "width:60%; height:80px" })
+            @Html.ValidationMessageFor(model => model.Address)
+        </div>
+    </div>
+
+    <div class="control-group">
+        <button class="btn btn-success btn-large push-down-10">ثبت اطلاعات و اتصال به درگاه بانکی</button>
+    </div>
+
+
+}
+@section Script {
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryval")
+}

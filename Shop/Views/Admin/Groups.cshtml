@@ -1,0 +1,157 @@
+﻿@model Shop.ViewModel.Admin.AddGroupViewModel
+
+@{
+    ViewBag.Title = "Gruops";
+}
+
+@*@helper AddOption(int? parentId, string space)
+    {
+        foreach (var item in Model.Groups.Where(p => p.ParentId == parentId).ToList())
+        {
+            <option value="@item.Id">@space+@item.Name</option>
+            @Html.Raw(HttpUtility.HtmlDecode(@AddOption(@item.Id, space + "&nbsp;&nbsp;&nbsp;&nbsp;").ToString()));
+
+        }
+    }*@
+
+@section Url{
+    <a href="/Home/Index">صفحه اصلی</a><li><span class="icon-chevron-right"></span></li><a href="/Admin/Groups">مدیریت گروه ها</a>
+}
+
+@using (Html.BeginForm("AddGroup", "Admin", FormMethod.Post, new { id = "groupForm" }))
+{
+    @Html.AntiForgeryToken()
+    //Html.EnableClientValidation(false);
+    <h2 class="title-area">افزودن گروه</h2>
+    <div class="block-standart">
+        <div class="form inline">
+            <div class="control-group" style="display:inline-block">
+                <h2> افزودن گروه</h2>
+
+                @* az roye id va name parent id ro tashkhis mide bara ezafe karadan
+                    dar id _
+                    va dar name .
+                    estefade mishavad ta modelbinder mvc khodesh maqadiro ezafe kone *@
+                @Html.Partial("_GroupList", Model.Groups, new ViewDataDictionary { { "id", "Group_ParentId" }, { "name", "Group.ParentId" } })
+            </div>
+
+            <div class="control-group" style="display:inline-block;vertical-align:top;padding-right:20px;margin-top:250px">
+                <label class="label"> نام گروه <span aria-required="true"></span></label>
+                <div class="controls">
+                    @Html.EditorFor(p => p.Group.Name, new { htmlAttributes = new { @required = "", style = "width: 240px;" } })
+                    @Html.ValidationMessageFor(p => p.Group.Name)
+                </div>
+                <div class="control-group" style="float: right">
+                    <button class="btn btn-success btn-large bold" id="btnAdd" style="margin-top:20px">افزودن گروه</button>
+                    <button class="btn btn-primary btn-large bold" id="btnEdit" style="margin-top:20px">ویرایش گروه</button>
+                    <button class="btn btn-danger btn-large bold" id="btnDelete" style="margin-top:20px">حذف گروه</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@* baraie in ke betonim pas az sabt group safaro refresh konim
+     niaz darim ke to returnAddgroup do meqdaro bargardonim va
+    chon in emkano nadareim baiad az Json estefade konim *@
+@* ebteda jelogiry az anjam pishfarz form ba estedade az perevent*@
+
+
+
+@section script{
+    <script type="text/javascript">
+        $(function () {
+            $("#Group_ParentId").click(function (e) {
+                if ($("#Group_ParentId").find(":selected").length > 0) {
+                    var txtGroupName = $("#Group_ParentId").find(":selected").text().trim();
+                    $("#Group_Name").val(txtGroupName.substring(1));
+                   }
+            });
+
+       
+                $("#btnAdd").click(function (e) {
+                    e.preventDefault();
+                    if ($("#groupForm").valid()) {
+                        $.ajax({
+                            url: "/Admin/AddGroup",
+                            //serialize maghadir vorodi ro b reshte tabdil mikonad
+                            data: $("#groupForm").serialize(),
+                            type: "Post",
+                            dataType: "Json",
+                            //result etelatei ke az server daryaft kardim
+                            success: function (result) {
+                                if (result.Success) {
+                                    $("#divGroupList").html(result.Html);
+                                }
+                                eval(result.Script);
+                               location.reload();
+                            },
+                            error: function () { alert("error"); }
+                        });
+                    }
+                });
+
+                $("#btnDelete").click(function (e) {
+                    e.preventDefault();
+                    if ($("#Group_ParentId").find(":selected").length > 0) {
+                        $.ajax({
+                            url: "/Admin/DeleteGroup",
+                            //serialize maghadir vorodi ro b reshte tabdil mikonad
+                            data: { id: $("#Group_ParentId").find(":selected").val() },
+                            type: "post",
+                            dataType: "Json",
+                            //result etelatei ke az server daryaft kardim
+                            success: function (result) {
+                                if (result.Success) {
+                                    $("#divGroupList").html(result.Html);
+                                }
+                                eval(result.Script);
+                                location.reload();
+                                //$("#Group_Name").val().clear();
+                            },
+                            error: function () { alert("error"); }
+                        });
+                    }
+                    else {
+                        alert("ابتدا گروه مورد نظر را انتخاب کنید");
+                    }
+
+                });
+
+                $("#btnEdit").click(function (e) {
+                    e.preventDefault();
+                    if ($("#groupForm").valid()) {
+                        if ($("#Group_ParentId").find(":selected").length > 0) {
+                            $.ajax({
+                                url: "/Admin/EditGroup",
+                                //serialize maghadir vorodi ro b reshte tabdil mikonad
+                                data: {
+                                    Id: $("#Group_ParentId").find(":selected").val(),
+                                    Name: $("#Group_Name").val(),
+                                    ParentId: $("#Group_ParentId").find(":selected").attr("parentid")
+                                },
+                                type: "post",
+                                dataType: "Json",
+                                //result etelatei ke az server daryaft kardim
+                                success: function (result) {
+                                    if (result.Success) {
+                                        $("#divGroupList").html(result.Html);
+                                     }
+                                    eval(result.Script);
+                                    location.reload();
+                                },
+                                error: function () { alert("error"); }
+                            });
+                        } else {
+                            alert("ابتدا گروه مورد نظر را انتخاب کنید");
+                        }
+                    }
+                   
+                });
+              });
+
+       
+    </script>
+}
+

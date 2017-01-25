@@ -1,0 +1,47 @@
+﻿@model  Shop.ViewModel.Home.PageListViewModel
+@using MvcPager
+
+<div id="divSearch">
+    <table class="table table-hover table-striped">
+        <tr>
+            <th>
+                @Html.DisplayName("نام نمایندکی")
+            </th>
+
+            <th>
+                @Html.DisplayName("آدرس نمایندگی")
+            </th>
+
+            <th>
+                @Html.DisplayName("استان")
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model.Resellers)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State.Name)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+
+
+    <div class="block-pagination" style="direction:ltr;">
+        @*background-color: #8ccfff;*@
+        @Html.Pager( 10 ,Model.CurrentPage ,Model.TotalItemCount )
+    </div>
+</div>
+

@@ -1,0 +1,77 @@
+﻿@using Shop.Helpers.HtmlHelpers
+@model string
+@{
+    ViewBag.Title = "SendMail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Url{
+
+    <a href="/Home/Index">صفحه اصلی</a><li><span class="icon-chevron-right"></span></li><a href="/Admin/SendMail"> ارسال ایمیل</a>
+}
+
+
+@using (Html.BeginForm("SendMail", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "formSendMail" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <h2 class="title-area">ارسال ایمیل</h2>
+    <div>
+        @Html.Label("گیرندگان",new { @class = "" })
+        <div class="control-group">
+            @Html.TextBox("Recivers", Model, new { @required = "" })
+        </div>
+
+    </div>
+
+    <div>
+        @Html.Label("عنوان پیام",new { @class = "" })
+        <div class="control-group">
+            @Html.TextBox("Title", "", new { @required = "" })
+            @Html.ValidationMessage("عنوان ایمیل را تعیین کنید")
+        </div>
+
+    </div>
+    <br />
+    <div class="control-group">
+            @Html.Label( "متن پیام" ,
+                     new { @class = "" } )
+            <div class="control-group">
+                @Html.TextArea( "Text")
+            </div>
+            <div class="control-group">
+                @Html.Label( "فایل ضمیمه" ,
+                         htmlAttributes : new { @class = "" } )
+                <div class="control-group">
+                    @Html.Upload( "Attachment" )
+                </div>
+            </div>
+
+            <div class="control-group">
+                <button class="btn btn-info btn-large bold">ارسال ایمیل</button>
+            </div>
+        </div>
+
+}
+
+
+@section styles{
+    <link href="@Url.Content("~/Scripts/TagsInput/bootstrap-tagsinput.css")" rel="stylesheet" />
+}
+
+@section script{
+    <script src="@Url.Content("~/Scripts/AjaxForm/jquery.form.min.js")"></script>
+    <script src="@Url.Content( "~/Scripts/TagsInput/bootstrap-tagsinput.min.js" )"></script>
+    @Html.CKEditorHeaderScripts()
+    <script>
+        $(function () {
+            $("#Text").ckeditor();
+            $("#Recivers").keypress(function (e) {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                }
+            }).tagsinput();
+        });
+        $("#formSendMail").ajaxForm();
+    </script>
+}

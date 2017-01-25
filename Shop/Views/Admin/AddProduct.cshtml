@@ -1,0 +1,154 @@
+﻿@using Shop.Helpers.HtmlHelpers
+@model Shop.ViewModel.Admin.AddProductViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Url{
+    <a href="/Home/Index">صفحه اصلی</a><li><span class="icon-chevron-right"></span></li><a href="/Admin/AddProduct">افزودن محصول</a>
+}
+
+
+
+@* for uplod file va chon dar form ajax emkan estefade az in nist majborim be sorat html beferestim va az dll ajaxForm jodagane estedafe konim *@
+@*new {enctype="multipart/form-data"})*@
+@using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "formProduct" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <h2 class="title-area">افزودن محصول</h2>
+
+
+
+    <div class="control-group">
+     @Html.LabelFor(model => model.Product.GroupId, new { @class = "label" })
+        <div class="control-group">
+            @Html.Partial( "_GroupList" ,
+                           @Model.Groups ,
+                           new ViewDataDictionary { { "id" , "Product_GroupId" } , { "name" , "Product.GroupId" } } )
+        </div>
+    </div>
+    <div class="control-group">
+       @Html.LabelFor( model => model.Product.Name ,htmlAttributes : new { @class = "label" } )
+        <div class="controls">
+            @Html.EditorFor( model => model.Product.Name ,
+                             new { htmlAttributes = new { @required = "" , style = "width: 240px;" } } )
+            @Html.ValidationMessageFor( model => model.Product.Name )
+        </div>
+    </div>
+
+    <div class="group">
+        @Html.LabelFor(model => model.Product.Price, htmlAttributes: new { @class = "label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.Product.Price, new { @required = "", style = "width:85%; height:100px" })
+            @Html.ValidationMessageFor(model => model.Product.Price)
+        </div>
+    </div>
+    <div class="group">
+        @Html.LabelFor(model => model.Product.OffPrice, htmlAttributes: new { @class = "label" })
+        <div class="control-group">
+            @Html.EditorFor(model => model.Product.OffPrice, new { @required = "", style = "width: 240px;" })
+            @Html.ValidationMessageFor(model => model.Product.OffPrice)
+        </div>
+    </div>
+
+    <div class="control-group">
+        @Html.LabelFor(model => model.Product.Url, htmlAttributes: new { @class = "label" })
+        <div class="control-group">
+            @Html.EditorFor(model => model.Product.Url, new { htmlAttributes = new { @required = "", style = "width: 240px;" } })
+            @Html.ValidationMessageFor(model => model.Product.Url)
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Product.Summery)
+        <div class="control-group">
+            @Html.TextAreaFor(model => model.Product.Summery, new { htmlAttributes = new { @class = "text" } })
+            @Html.ValidationMessageFor(model => model.Product.Summery)
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Product.KeyWord,
+                                            htmlAttributes: new { @class = "label" })
+        <div class="control-group">
+            @Html.EditorFor(model => model.Product.KeyWord,
+                                                 new { htmlAttributes = new { @class = "text" } })
+            @Html.ValidationMessageFor(model => model.Product.KeyWord)
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Product.Description,
+                                            htmlAttributes: new { @class = "label" })
+        <div class="control-group">
+            @Html.EditorFor(model => model.Product.Description, new { htmlAttributes = new { @class = "text", style = "width:85%;height: 35px;" } })
+            @Html.ValidationMessageFor(model => model.Product.Description)
+        </div>
+    </div>
+
+    <div>
+        @Html.LabelFor(model => model.Product.Tag,
+                                            htmlAttributes: new { @class = "label" })
+        <div class="control-group">
+            @Html.EditorFor(model => model.Product.Tag,
+                                                 new { htmlAttributes = new { @class = "" } })
+            @Html.ValidationMessageFor(model => model.Product.Tag)
+        </div>
+    </div>
+
+
+    @Html.LabelFor(model => model.Product.Enable, htmlAttributes: new { @class = "label" })
+    <div class="control-group">
+
+        <div class="box">
+            @Html.EditorFor(model => model.Product.Enable)
+            @Html.ValidationMessageFor(model => model.Product.Enable)
+        </div>
+    </div>
+    <br />
+
+    @Html.LabelFor(model => model.Product.Image, htmlAttributes: new { @class = "label" })
+    <div class="control-group">
+        @Html.Upload("uploadImage")
+        @*@Html.UploadFor( model => model.Product.Image ,
+            new { htmlAttributes = new { name = "uploadImage" } } )*@
+        @*@Html.ValidationMessageFor(model => model.Product.Image)*@
+    </div>
+
+
+    <div class="control-group">
+        <button class="btn btn-success btn-large push-down-10" style="width: 230px;height: 40px;">افزودن</button>
+    </div>
+}
+
+@section styles{
+    <link href="@Url.Content("~/Scripts/TagsInput/bootstrap-tagsinput.css")" rel="stylesheet" />
+}
+
+@section script{
+    <script src="@Url.Content("~/Scripts/AjaxForm/jquery.form.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/AjaxForm/jquery.form.min.js")"></script>
+    <script src="@Url.Content( "~/Scripts/AutoNumeric/jquery-price.js")"></script>
+    <script src="@Url.Content( "~/Scripts/TagsInput/bootstrap-tagsinput.min.js" )"></script>
+    @Html.CKEditorHeaderScripts()
+    <script>
+        $(function () {
+            $("#Product_Price").price();
+            $("#Product_Summery").ckeditor();
+            $("#Product_KeyWord").keypress(function (e) {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                }
+            }).tagsinput();
+            $("#Product_Tag").keypress(function (e) {
+                if (e.keyCode === 13) {
+                    e.preventDefault();
+                }
+            }).tagsinput();
+        });
+
+        $("#formProduct").ajaxForm();
+    </script>
+}

@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Verify";
+}
+
+@section Url{
+    <a href="/Home/Index">صفحه اصلی</a><li><span class="icon-chevron-right"></span></li><a href="/Home/Buy">خرید محصولات  </a><li><span class="icon-chevron-right"></span></li><a href="/Home/Verify">تکمیل خرید</a>
+}
+
+        @if (ViewBag.Message != null)
+        {
+            <div style="padding: 10px; background-color: #ffcece; border: 1px solid #ff4040; border-radius: 5px; font-size:x-large; font-weight:bold;">
+                @ViewBag.Message
+            </div>
+        }
+        @if (ViewBag.Message2 != null)
+        {
+            <div style="padding: 10px; background-color: #c1fdc8; border: 1px solid #1de134; border-radius: 5px; font-size: x-large; font-weight: bold; ">
+                @ViewBag.Message2
+            </div>
+        }

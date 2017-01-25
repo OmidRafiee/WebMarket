@@ -1,0 +1,75 @@
+﻿@model Shop.ViewModel.Admin.AddResellerViewModel
+
+@{
+    ViewBag.Title = "AddReseller";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Url{
+
+    <a href="/Home/Index">صفحه اصلی</a><li><span class="icon-chevron-right"></span></li><a href="/Home/AddReseller">افزودن نمایندگی جدید</a>
+}
+
+
+@*@using (Html.BeginForm("AddReseller", "Home", FormMethod.Post))*@
+@using (Ajax.BeginForm("AddReseller", "Admin", new AjaxOptions { HttpMethod = "Post", Url = "/Admin/AddReseller" }))
+{
+    <h2 class="title-area">افزودن نمایندگی</h2>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+        <div>
+            @ViewBag.Message
+        </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.Reseller.Name, new { @class = "label" })
+        <div class="control-group">
+            @Html.TextBoxFor(model => model.Reseller.Name, new { @required = "", style = "width: 240px;" })
+            @Html.ValidationMessageFor(model => model.Reseller.Name)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.Reseller.Address, new { @class = "label" })
+        <div class="control-group">
+            @Html.TextAreaFor(model => model.Reseller.Address, new { style = "width: 98%;" })
+            @Html.ValidationMessageFor(model => model.Reseller.Address)
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.Reseller.StateId, new { @class = "label" })
+        <div class="controls">
+            @Html.DropDownListFor(model => model.Reseller.StateId, new SelectList(Model.States, "Id", "Name"), "استان مورد نظر خود را انتخاب کنید")
+            @Html.ValidationMessageFor(model => model.Reseller.StateId)
+        </div>
+    </div>
+    <div class="control-group" id="divDrpCity">
+    </div>
+
+    <div class="control-group">
+        <button class="btn btn-primary push-down-10">افزودن</button>
+    </div>
+
+}
+
+
+
+@section script{
+    <script type="text/javascript">
+        $(function () {
+            $("#Reseller_StateId").change(function () {
+                $.ajax({
+                    url: "/Home/GetCities",
+                    data: { stateId: $("#Reseller_StateId").find(":selected").val() },
+                    type: "Post",
+                    dataType: "Html",
+                    success: function (result) {
+                        $("#divDrpCity").html(result);
+                    },
+                    error: function () {
+                        alert("خطا!");
+                    }
+                });
+            });
+        })
+    </script>
+}

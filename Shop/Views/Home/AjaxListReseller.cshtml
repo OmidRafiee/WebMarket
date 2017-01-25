@@ -1,0 +1,26 @@
+﻿@model Shop.ViewModel.Home.PageListViewModel
+@{
+    ViewBag.Title = "AjaxListReseller";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Url{
+
+    <a href="/Home/Index">صفحه اصلی</a><li><span class="icon-chevron-right"></span></li><a href="/Home/AjaxListReseller">لیست نمایندگی ها </a>
+}
+
+
+
+        <h2 class="title-area">لیست نمایندگی </h2>
+    @Html.Partial("_AjaxListReseller", Model)
+    @section Script{
+        <script src="~/Scripts/path.js"></script>
+        <script src="~/Scripts/jquery.pager-1.0.2.js"></script>
+        <script>
+            $("#divAjaxPager").pager();
+        </script>
+    }
+
+
+
+

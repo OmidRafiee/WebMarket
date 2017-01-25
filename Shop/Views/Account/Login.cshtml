@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Url{
+
+    <a href="/Home/Index">صفحه اصلی</a><li><span class="icon-chevron-right"></span></li><a href="~/Account/Login">ورود </a>
+}
+    <h2 class="title-area">ورود </h2>
+
+    <div style="font-size:large;color:red;text-align:center;">
+        @ViewBag.Message
+    </div>
+
+    <div>
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+        <div class="control-group">
+            @Html.Label("نام کاربری")
+            <div class="control-group">
+                @Html.Editor("UserName", new { htmlAttributes = new { @required = "" } })
+                @Html.ValidationMessage("نام کاربری را وارد کنید")
+            </div>
+        </div>
+    <div class="control-group">
+        @Html.Label("رمز عبور ")
+        <div class="controls">
+            @Html.Editor("Password", new { htmlAttributes = new { @required = "", type = "password" } })
+        </div>
+    </div>
+        <div class="control-group">
+            @Html.Label( "مرا به خاطر بسپار" ,
+                         new { @for = "RememberMe" } )
+            <div class="control-group">
+                @Html.CheckBox( "RememberMe" ,
+                                new { htmlAttributes = new { @class = "text" } } )
+            </div>
+
+            <div class="control-group">
+                <div class="control-group">
+                    <button class="btn btn-primary bold higher">ورود</button>
+                </div>
+            </div>
+        </div>
+         }
+  </div>

@@ -1,0 +1,251 @@
+﻿@model Shop.ViewModel.Home.ShowGroupViewModel
+
+@{
+    ViewBag.Title = "ShowGroups";
+}
+    <!--  = Slider Revolution =  -->
+    <div class="fullwidthbanner-container">
+       <div id="sliderRevLeft"><i class="icon-chevron-left"></i></div>
+        <div id="sliderRevRight"><i class="icon-chevron-right"></i></div>
+    </div> <!-- /slider revolution -->
+    <!--  = Main container =  -->
+
+    <div class="container">
+       <!--  ==========  -->
+        <!--  = Featured Items =  -->
+        <!--  ==========  -->
+        <div class="row featured-items blocks-spacer">
+            <div class="span12">
+                <!-- ========== -->
+                <!-- = Carousel = -->
+                <!-- ========== -->
+                <div class="carouFredSel" data-autoplay="false" data-nav="featuredItems">
+                    <div class="slide">
+                        <div class="row">
+
+                            <!-- ========== -->
+                            <!-- = Product = -->
+                            <!-- ========== -->
+                            @foreach ( var item in Model.Products )
+                            {
+                                <div class="span4">
+                                    <div class="product">
+                                        <div class="product-img featured">
+                                            <div class="picture">
+                                                @*<img src="images/dummy/most-popular-products/popular-1.jpg" alt="" width="540" height="412"/>*@
+                                                @Html.ImageFor( modelItem => item.Image ,
+                                                                new { width = "518" , height = "358" } ,
+                                                                "notfound.jpg" ,
+                                                                "Files" ,
+                                                                "UploadImages" )
+
+                                                <div class="img-overlay">
+                                                    <a href="~/Products/@item.Url" class="btn more btn-primary">توضیحات بیشتر</a>
+                                                    <a href="#" class="btn buy btn-danger" product="@item.Id">اضافه به سبد خرید</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="main-titles no-margin">
+                                            @if ( item.OffPrice != 0 )
+                                            {
+                                                <div class="product-price"><span class="product-price-last">@item.Price.ToPrice()</span></div>
+                                                <br/>
+                                                <span class="product-price-new"> @item.OffPrice.ToPrice()</span>
+                                                @*<div class="product-badge">
+                                                    <img src="~/Content/shop/images/badge-sale.png">
+                                                </div>*@
+                                            }
+                                            else
+                                            {
+                                                <br/>
+                                                <span class="product-price"> @item.Price.ToPrice()</span>
+                                            }
+                                        </div>
+                                        <p class="desc">@item.Description</p>
+                                        <p class="center-align stars">
+                                            <span class="icon-star stars-clr"></span>
+                                            <span class="icon-star stars-clr"></span>
+                                            <span class="icon-star"></span>
+                                            <span class="icon-star"></span>
+                                            <span class="icon-star"></span>
+
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                    
+                    </div>
+           
+    <!--  ==========  -->
+    <!--  = Lastest News =  -->
+    <!--  ==========  -->
+    <div class="darker-stripe blocks-spacer more-space latest-news with-shadows">
+        <div class="container">
+
+            <!--  ==========  -->
+            <!--  = Title =  -->
+            <!--  ==========  -->
+            <div class="row">
+                <div class="span12">
+                    <div class="main-titles center-align">
+                        <h2 class="title">
+                            <span class="clickable icon-chevron-right" id="tweetsRight"></span> &nbsp;&nbsp;&nbsp;
+                            <span class="light">آخرین</span> خبر ها &nbsp;&nbsp;&nbsp;
+                            <span class="clickable icon-chevron-left" id="tweetsLeft"></span>
+                        </h2>
+                    </div>
+                </div>
+            </div> <!-- /title -->
+            <!--  ==========  -->
+            <!--  = News content =  -->
+            <!--  ==========  -->
+            <div class="row">
+                <div class="span12">
+                    <div class="carouFredSel" data-nav="tweets" data-autoplay="false">
+
+
+                        <!--  ==========  -->
+                        <!--  = Slide =  -->
+                        <!--  ==========  -->
+                        <div class="slide">
+                            <div class="row">
+                                <div class="span6">
+                                    <div class="news-item">
+                                        <div class="published">12 بهمن 1392</div>
+                                        <h6><a href="#">عنوان خبر شما</a></h6>
+                                        <p>در این قسمت میتوانید خبر خود را بنویسید. این یک نوشته ی آزمایشی است که صرفا برای پر کردن این بخش به کار رفته و جنبه ی دیگری ندارد. شما میتوانید این ناحیه را با محتوای دلخواه خود پر کنید.</p>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="news-item">
+                                        <div class="published">15 بهمن 1392</div>
+                                        <h6><a href="#">یک خبر جالب دیگر</a></h6>
+                                        <p>در این قسمت میتوانید خبر خود را بنویسید. این یک نوشته ی آزمایشی است که صرفا برای پر کردن این بخش به کار رفته و جنبه ی دیگری ندارد. شما میتوانید این ناحیه را با محتوای دلخواه خود پر کنید.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- /slide -->
+                        <!--  ==========  -->
+                        <!--  = Slide =  -->
+                        <!--  ==========  -->
+                        <div class="slide">
+                            <div class="row">
+                                <div class="span6">
+                                    <div class="news-item">
+                                        <div class="published">12 بهمن 1392</div>
+                                        <h6><a href="#">عنوان خبر شما</a></h6>
+                                        <p>در این قسمت میتوانید خبر خود را بنویسید. این یک نوشته ی آزمایشی است که صرفا برای پر کردن این بخش به کار رفته و جنبه ی دیگری ندارد. شما میتوانید این ناحیه را با محتوای دلخواه خود پر کنید.</p>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="news-item">
+                                        <div class="published">15 بهمن 1392</div>
+                                        <h6><a href="#">یک خبر جالب دیگر</a></h6>
+                                        <p>در این قسمت میتوانید خبر خود را بنویسید. این یک نوشته ی آزمایشی است که صرفا برای پر کردن این بخش به کار رفته و جنبه ی دیگری ندارد. شما میتوانید این ناحیه را با محتوای دلخواه خود پر کنید.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- /slide -->
+
+                    </div>
+                </div>
+            </div> <!-- /news content -->
+        </div>
+    </div> <!-- /latest news -->
+    <!--  ==========  -->
+    <!--  = Brands Carousel =  -->
+    <!--  ==========  -->
+    <div class="container blocks-spacer-last">
+
+        <!--  ==========  -->
+        <!--  = Title =  -->
+        <!--  ==========  -->
+        <div class="row">
+            <div class="span12">
+                <div class="main-titles lined">
+                    <h2 class="title"><span class="light">برند های</span> ما</h2>
+                    <div class="arrows">
+                        <a href="#" class="icon-chevron-right" id="brandsRight"></a>
+                        <a href="#" class="icon-chevron-left" id="brandsLeft"></a>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /title -->
+        <!--  ==========  -->
+        <!--  = Logos =  -->
+        <!--  ==========  -->
+        <div class="row">
+            <div class="span12">
+                <div class="brands carouFredSel" data-nav="brands" data-autoplay="true">
+                    <img src="@Url.Content( "~/Content/WebMarket/webmarket/images/dummy/brands/brands_01.jpg")" alt="" width="203" height="104" />
+                    <img src="@Url.Content( "~/Content/WebMarket/webmarket/images/dummy/brands/brands_02.jpg")" alt="" width="203" height="104" />
+                    <img src="@Url.Content( "~/Content/WebMarket/webmarket/images/dummy/brands/brands_03.jpg")" alt="" width="203" height="104" />
+                    <img src="@Url.Content( "~/Content/WebMarket/webmarket/images/dummy/brands/brands_04.jpg")" alt="" width="203" height="104" />
+                    <img src="@Url.Content( "~/Content/WebMarket/webmarket/images/dummy/brands/brands_05.jpg")" alt="" width="203" height="104" />
+                    <img src="@Url.Content( "~/Content/WebMarket/webmarket/images/dummy/brands/brands_06.jpg")" alt="" width="203" height="104" />
+                </div>
+            </div>
+        </div> <!-- /logos -->
+    </div> <!-- /brands carousel -->
+    <!--  ==========  -->
+    <!--  = Footer =  -->
+    <!--  ==========  -->
+    @section Script{
+        <script>
+            $(function () {
+                $("a.btn.buy.btn-danger").click(function (e) {
+                    e.preventDefault();
+                    var productId = $(this).attr("product");
+                    $.ajax({
+                        url: "/Home/AddToCart",
+                        data: { id: productId, count: 1 },
+                        type: "Post",
+                        dataType: "Json",
+                        success: function (result) {
+                            if (result.Success) {
+                                //$("#cartContainer").html(result.Html);
+                                //$("#warpper").load(location.href + "#warpper");//reload div
+                                location.reload();
+                            }
+                            eval(result.Script);
+                        },
+                        error: function () {
+                            alert("error");
+                        }
+                    });
+                });
+
+
+                $(".icon-remove-sign").click(function (e) {
+                    e.preventDefault();
+                    var id = $(this).attr("productid");
+                    var img = $(this);
+                    $.ajax({
+                        url: "/Home/RemoveCart",
+                        data: { Id: id },
+                        type: "Post",
+                        dataType: "Json",
+                        success: function (result) {
+                            if (result.Success) {
+                                //img.parent().parent().hide();
+                                //$("#cartContainer").html(result.Html);
+                                location.reload();
+                            }
+                            eval(result.Script);
+                        },
+                        error: function () {
+                            alert("خطا!");
+                        }
+                    });
+                });
+
+            });
+        </script>
+    }
