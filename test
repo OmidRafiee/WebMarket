@@ -1,0 +1,33 @@
+ [HttpGet]
+        // GET: Home
+        public ActionResult Index(string cityName)
+        {
+          return View();
+        }
+        
+        [HttpGet]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(User user)
+        {
+            return MessageBox.Show("در ثبت اطلاعات خطا رخ داد !", MessageType.Error);
+        }
+
+
+////////////////////////////////////////////////////////
+  routes.MapRoute(
+             name: "City",
+             url: "{cityName}",
+             defaults: new { controller = "Home", action = "Index", cityName = UrlParameter.Optional }
+         );
+
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
+
